@@ -18,6 +18,10 @@ class UserController extends Controller
     {
         return view('backend.users.index');
     }
+    public function donor()
+    {
+        return view('backend.users.donor');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -62,7 +66,7 @@ class UserController extends Controller
         $user = new User($data);
         if ($user->save()) {
             $user->assignRole($request->role);
-            $user->createAsStripeCustomer();
+           // $user->createAsStripeCustomer();
             return back()->with('success', 'User created successfully!');
         }
         return back()->with('error', 'Something went wrong!');

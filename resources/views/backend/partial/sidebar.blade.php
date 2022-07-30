@@ -34,7 +34,12 @@
 
             <li class="{{ set_active('home/users') }}">
                 <a href="{{ route('home.users.index') }}">
-                    <i class="fa fa-user"></i> <span>Users</span>
+                    <i class="fa fa-user"></i> <span>Volunteer</span>
+                </a>
+            </li>
+            <li class="{{ set_active('home/users/donor') }}">
+                <a href="{{ route('home.users.donor') }}">
+                    <i class="fa fa-user"></i> <span>Donor</span>
                 </a>
             </li>
 

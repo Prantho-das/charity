@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Jobs\BRequestJob;
+use App\Mail\BloodRequestAccepted;
 use App\Models\BloodRequest;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Mail;
 
 class BloodRequestController extends Controller
 {
@@ -41,7 +42,7 @@ class BloodRequestController extends Controller
         $brequest->status = 1;
         $brequest->save();
 
-        $volunteers = User::role('volunteer')->get();
+        $volunteers = User::role('volunteer')->where('id','!=',$brequest->request_by)->get();
 
         foreach ($volunteers as $volunteer) {
             $this->dispatch(new BRequestJob($volunteer, $brequest));
@@ -64,6 +65,7 @@ class BloodRequestController extends Controller
         if (!$brequest->accepted_by) {
             $brequest->accepted_by = $userId;
             $brequest->save();
+            Mail::to($brequest->relRequestedBy->email)->send(new BloodRequestAccepted($brequest->relAcceptedBy, $brequest));
         }
         return redirect()->route('landing')->with('accept-success', 'Thank you for coming to donate');
     }

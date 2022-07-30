@@ -15,7 +15,7 @@
                 <br>
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Volunteer Table</h3>
+                        <h3 class="box-title">Donor Table</h3>
                     </div><!-- /.box-header -->
                     <div class="box-body table-responsive">
                         <table id="datatable" class="table table-bordered table-hover">
@@ -29,7 +29,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (\App\Models\User::role('Volunteer')->get() as $user)
+                                @foreach (\App\Models\User::role('Donor')->get() as $user)
                                     <tr>
                                         <td>
                                             <img src="{{ asset($user->image ?? randUserAvatar()) }}"

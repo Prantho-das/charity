@@ -88,8 +88,8 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'status' => empty($data['status']) ? 0 : ($data['status'] == 'on' ? 1 : 0),
         ]);
-        $user->assignRole('Donor');
-        $user->createAsStripeCustomer();
+       // $user->assignRole('Donor');
+       // $user->createAsStripeCustomer();
         return $user;
     }
 }

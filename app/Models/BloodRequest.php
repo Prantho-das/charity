@@ -14,4 +14,8 @@ class BloodRequest extends Model
     {
         return $this->belongsTo('App\Models\User','accepted_by','id');
     }
+    public function relRequestedBy(): BelongsTo
+    {
+        return $this->belongsTo('App\Models\User', 'request_by', 'id');
+    }
 }
