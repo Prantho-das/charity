@@ -155,7 +155,6 @@ Route::group(['as' => 'home.', 'prefix' => 'home', 'middleware' => ['auth']], fu
 /* -------------------------- Stripe Donation Start ------------------------- */
 
 Route::group(['middleware' => ['role:Donor']], function () {
-    Route::get('donate', 'StripePaymentController@donate')->name('home.donate');
     Route::post('stripe', 'StripePaymentController@stripePost')->name('home.stripe.post');
     Route::get('volunteer', function () {
         if (auth()->check() && !auth()->user()->hasRole('Volunteer')) {
@@ -164,5 +163,6 @@ Route::group(['middleware' => ['role:Donor']], function () {
         return back();
     })->name('volunteer');
 });
+Route::get('donate', 'StripePaymentController@donate')->name('home.donate');
 
     /* --------------------------- Stripe Donation End -------------------------- */
