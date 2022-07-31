@@ -18,6 +18,16 @@ Route::get('/', 'Frontend\HomeController@index')->name('landing');
 Route::get('/coming-to-donate/{bRequestId}/{userId}', "Backend\BloodRequestController@comingToDonate")->name('comingToDonate');
 
 Auth::routes();
+Route::post('bkash/get-token', 'BkashController@getToken')->name('bkash-get-token');
+Route::post('bkash/create-payment', 'BkashController@createPayment')->name('bkash-create-payment');
+Route::post('bkash/execute-payment', 'BkashController@executePayment')->name('bkash-execute-payment');
+Route::get('bkash/query-payment', 'BkashController@queryPayment')->name('bkash-query-payment');
+Route::post('bkash/success', 'BkashController@bkashSuccess')->name('bkash-success');
+
+// Refund Routes for bKash
+Route::get('bkash/refund', 'BkashRefundController@index')->name('bkash-refund');
+Route::post('bkash/refund', 'BkashRefundController@refund')->name('bkash-refund');
+
 Route::group(['as' => 'home.', 'prefix' => 'home', 'middleware' => ['auth']], function () {
     Route::get('/get-role-access', function () {
         if (auth()->user()->hasAnyRole(Role::all())) {
