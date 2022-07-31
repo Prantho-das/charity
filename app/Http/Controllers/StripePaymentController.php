@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Faker\Provider\ar_SA\Payment;
+use App\Models\Payment;
 
 class StripePaymentController extends Controller
 {
@@ -22,5 +22,6 @@ class StripePaymentController extends Controller
             'paid_for' => $request->paid_for,
             'transaction_id' => $request->transaction_id,
         ]);
+        return response()->json(['success' => 'Payment Successful']);
     }
 }

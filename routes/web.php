@@ -18,11 +18,6 @@ Route::get('/', 'Frontend\HomeController@index')->name('landing');
 Route::get('/coming-to-donate/{bRequestId}/{userId}', "Backend\BloodRequestController@comingToDonate")->name('comingToDonate');
 
 Auth::routes();
-Route::post('bkash/get-token', 'BkashController@getToken')->name('bkash-get-token');
-Route::post('bkash/create-payment', 'BkashController@createPayment')->name('bkash-create-payment');
-Route::post('bkash/execute-payment', 'BkashController@executePayment')->name('bkash-execute-payment');
-Route::get('bkash/query-payment', 'BkashController@queryPayment')->name('bkash-query-payment');
-Route::post('bkash/success', 'BkashController@bkashSuccess')->name('bkash-success');
 
 // Refund Routes for bKash
 Route::get('bkash/refund', 'BkashRefundController@index')->name('bkash-refund');
@@ -40,10 +35,10 @@ Route::group(['as' => 'home.', 'prefix' => 'home', 'middleware' => ['auth']], fu
             abort(401);
         }
         if ($role === 'Donor' || $role === 'Volunteer') {
-            $user = User::where('id',auth()->id())->first();
+            $user = User::where('id', auth()->id())->first();
             $rol = Role::where('name', $role)->first();
             $user->assignRole($rol);
-           // return Auth::user()->getRoleNames();
+            // return Auth::user()->getRoleNames();
             return redirect()->route('home.dashboard')->with('success', 'You are now a ' . $role);
         }
         return response()->json(['success' => false]);
@@ -165,6 +160,7 @@ Route::group(['as' => 'home.', 'prefix' => 'home', 'middleware' => ['auth']], fu
 /* -------------------------- Stripe Donation Start ------------------------- */
 
 Route::group(['middleware' => ['role:Donor']], function () {
+    Route::get('donate', 'StripePaymentController@donate')->name('home.donate');
     Route::post('stripe', 'StripePaymentController@stripePost')->name('home.stripe.post');
     Route::get('volunteer', function () {
         if (auth()->check() && !auth()->user()->hasRole('Volunteer')) {
@@ -173,6 +169,5 @@ Route::group(['middleware' => ['role:Donor']], function () {
         return back();
     })->name('volunteer');
 });
-Route::get('donate', 'StripePaymentController@donate')->name('home.donate');
 
     /* --------------------------- Stripe Donation End -------------------------- */
