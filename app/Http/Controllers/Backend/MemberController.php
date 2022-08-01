@@ -15,7 +15,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $members = User::role('Donor')->where('status', 1)->get();
+        $members = User::role(['Donor','Volunteer'])->where('status', 1)->get();
         return view('backend.member.index', [
             'members' => $members
         ]);

@@ -19,10 +19,6 @@ Route::get('/coming-to-donate/{bRequestId}/{userId}', "Backend\BloodRequestContr
 
 Auth::routes();
 
-// Refund Routes for bKash
-Route::get('bkash/refund', 'BkashRefundController@index')->name('bkash-refund');
-Route::post('bkash/refund', 'BkashRefundController@refund')->name('bkash-refund');
-
 Route::group(['as' => 'home.', 'prefix' => 'home', 'middleware' => ['auth']], function () {
     Route::get('/get-role-access', function () {
         if (auth()->user()->hasAnyRole(Role::all())) {
@@ -159,7 +155,7 @@ Route::group(['as' => 'home.', 'prefix' => 'home', 'middleware' => ['auth']], fu
 
 /* -------------------------- Stripe Donation Start ------------------------- */
 
-Route::group(['middleware' => ['role:Donor']], function () {
+Route::group(['middleware' => ['auth','role:Donor']], function () {
     Route::get('donate', 'StripePaymentController@donate')->name('home.donate');
     Route::post('stripe', 'StripePaymentController@stripePost')->name('home.stripe.post');
     Route::get('volunteer', function () {

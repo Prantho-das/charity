@@ -17,11 +17,11 @@ class Role
      */
     public function handle($request, Closure $next)
     {
-        if(!Auth::user()->hasAnyRole(['Admin', 'Volunteer'])) {
-            return redirect()->to('home/get-role-access');
-        }
         if(Auth::user()->hasExactRoles('Donor')) {
             return redirect()->to('/');
+        }
+        if(!Auth::user()->hasAnyRole(['Admin', 'Volunteer'])) {
+            return redirect()->to('home/get-role-access');
         }
         return $next($request);
     }

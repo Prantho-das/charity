@@ -487,6 +487,7 @@
 
 
                         <h4 class="cause-title"><a href="#">{{ $user->name }} </a></h4>
+                        <p class="text-center">Total Donation:{{ $user->donation }}$</p>
                         <div class="cause-details">
                             {{ donationQuate($index) }}
                         </div>
@@ -790,11 +791,10 @@
 ================================================== -->
 
 <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{{ asset('assets/js/jquery-1.11.1.min.js') }}"></script>
 {{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> --}}
 <script>
-    window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.4.1.min.js"><\/script>')
+    window.jQuery || document.write('<script src="{{ asset('assets/js/jquery-1.11.1.min.js') }}"></script>')
 </script>
 @if (Session::has('accept-success'))
     <script>

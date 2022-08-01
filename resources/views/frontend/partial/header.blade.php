@@ -109,26 +109,41 @@
                             {{-- </li> --}}
                             <li><a href="#">CONTACT US</a></li>
                             @guest
-                                <li><a href="#" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Want to
+                                <li><a href="#" data-toggle="modal" data-target="#exampleModal"
+                                        data-whatever="@mdo">Want to
                                         be a Volunteer !</a></li>
                             @endguest
                             @role('Admin|Volunteer')
-                            <li>
-                                <a href="{{ route('home.dashboard') }}">{{ auth()->user()->name }}</a>
-                            </li>
-                            @elserole('Donor')
-                            @if (auth()->user()->status == 0)
-                                <li><a href="{{ route('volunteer') }}">Want to be a Volunteer !</a></li>
-                            @else
-                                <li><a href="javascript::void(0)">Already requested</a></li>
-                            @endif
-                            <li>
-                                @hasanyrole("Admin|Volunteer")
-                                <a href="{{ route('home.dashboard') }}">{{ auth()->user()->name }}</a>
-                            @else
-                                <a href="javascript::void(0)">{{ auth()->user()->name }}</a>
-                                @endhasanyrole
-                            </li>
+                                <li style="display: flex;align-items:center;">
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-default btn-flat">Sign out</button>
+                                    </form>
+                                    <a href="{{ route('home.dashboard') }}">{{ auth()->user()->name }}</a>
+                                </li>
+                                @elserole('Donor')
+                                @if (auth()->user()->status == 0)
+                                    <li style="top:1rem;">
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-default btn-flat">Sign out</button>
+                                        </form>
+                                    </li>
+                                @else
+                                    <li style="top:1rem;">
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-default btn-flat">Sign out</button>
+                                        </form>
+                                    </li>
+                                @endif
+                                <li>
+                                    @hasanyrole('Admin|Volunteer')
+                                        <a href="{{ route('home.dashboard') }}">{{ auth()->user()->name }}</a>
+                                    @else
+                                        <a href="javascript::void(0)">{{ auth()->user()->name }}</a>
+                                    @endhasanyrole
+                                </li>
                             @endrole
 
 
@@ -183,8 +198,8 @@
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Password</label>
-                            <input type="password" class="form-control" id="exampleFormControlInput1" name="password"
-                                placeholder="Password">
+                            <input type="password" class="form-control" id="exampleFormControlInput1"
+                                name="password" placeholder="Password">
                             {{ $errors->first('password') }}
                         </div>
 
